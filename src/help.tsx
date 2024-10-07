@@ -11,6 +11,7 @@ export const Helper = (props: { mode: Mode }) => {
             <Text>a: Add</Text>
             <Text> | </Text>
             <Text>d: Delete</Text>
+            <Text> | </Text>
             <Text> &lt;Enter&gt;: rename </Text>
             <Text> | </Text>
             <Text>-: Go to parent dir </Text>
@@ -23,7 +24,7 @@ export const Helper = (props: { mode: Mode }) => {
                 {
                     mode === 'Normal'
                         ? "Tip: You are in normal mode, you can navigate with arrow keys, press <Enter> to modify the filename"
-                        : "Tip: You are in insert mode, press Esc to undo the modify, press <Enter> to save the modify"
+                        : "Tip: You are in insert mode, press <ESC> to undo the modify, press <Enter> to save the modify"
                 }
             </Text>
         </Box>

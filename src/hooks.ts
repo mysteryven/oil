@@ -89,6 +89,32 @@ export const useFileList = (dir: string, deps: any[]) => {
                 }
             })
         )
+
+        arr.sort((a, b) => {
+            if (a.filename === '..') {
+                return -1
+            }
+            if (b.filename === '..') {
+                return 1
+            }
+            if (a.filename[0] === '.' && b.filename[0] !== '.') {
+                return 1
+            }
+            if (a.filename[0] !== '.' && b.filename[0] === '.') {
+                return -1
+            }
+            // dir first, file second
+            if (a.type === 'dir' && b.type === 'file') {
+                return -1
+            }
+            if (a.type === 'file' && b.type === 'dir') {
+                return 1
+            }
+
+
+            return a.filename.localeCompare(b.filename)
+        })
+
         setList(arr)
     }, [dir, ...deps])
 
