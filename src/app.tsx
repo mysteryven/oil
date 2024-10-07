@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Spacer, Static, Text, useApp, useInput } from 'ink'
 import path from 'node:path';
-import { useActiveIndex, useCurrentDir, useFileList } from './hooks.js';
+import { useActiveIndex, useCurrentDir, useFileList, useOffset } from './hooks.js';
 import ActiveText from './activeText.tsx';
-import { EMPTY, PARENT_DIR } from './constant.ts';
+import { EMPTY, OFFSET, PARENT_DIR } from './constant.ts';
 import { Helper } from './help.tsx';
 import { rmSync } from 'node:fs';
+import { ScrollBox, type Props as ScrollBoxProps } from '@sasaplus1/ink-scroll-box'
 
 interface Props {
     initialDir: string
 }
 
 export type Mode = 'Normal' | 'Insert' | 'deleting'
+
 
 const App = (props: Props) => {
     const app = useApp()
@@ -22,6 +24,7 @@ const App = (props: Props) => {
     const [lastDir, setChildDir] = useState<string>("")
     const [list, setList] = useFileList(currentDir, [reloadFlag])
     const [mode, setMode] = useState<Mode>('Normal')
+
     let initialIndex = Math.min(list.length, 1)
     // we are back to a parent dir
     if (lastDir) {
@@ -29,6 +32,7 @@ const App = (props: Props) => {
     }
     const [activeIndex, setActiveIndex] = useActiveIndex(initialIndex, list.length, mode, [currentDir, initialIndex])
     const [_debug, setDebug] = useState<any>()
+    const offset = useOffset(activeIndex, list.length)
 
     useEffect(() => {
         setDebug(`reloadFlag${reloadFlag}, currentDir: ${currentDir}, activeIndex: ${activeIndex}, mode: ${mode}`)
@@ -124,36 +128,34 @@ const App = (props: Props) => {
 
     return (<>
         <Box flexDirection="column" borderStyle={"round"} flexGrow={1}>
-            {list.map((fileMeta, index) => {
-                const name = fileMeta.type === 'dir' ? fileMeta.filename + '/' : fileMeta.filename
-                if (activeIndex === index) {
-                    return (
-                        <Box key={fileMeta.filename}>
-                            <ActiveText
+            <ScrollBox flexDirection='column' offset={offset} height={OFFSET}>
+                {list.map((fileMeta, index) => {
+                    const name = fileMeta.type === 'dir' ? fileMeta.filename + '/' : fileMeta.filename
+                    if (activeIndex === index) {
+                        return (
+                            <Box key={fileMeta.filename}>
+                                <ActiveText mode={mode} fileMeta={fileMeta} reload={reload} currentDir={currentDir}>
+                                    {name}
+                                </ActiveText>
+                                {
+                                    mode === 'deleting' && <Box>
+                                        <Text color="grey"> Delete this? </Text>
+                                        <Text color="green"> Y[es] </Text>
+                                        <Text color="red"> N[o] </Text>
+                                    </Box>
+                                }
+                            </Box>
+                        )
+                    }
 
-                                mode={mode}
-                                fileMeta={fileMeta}
-                                reload={reload}
-                                currentDir={currentDir}
-                            >{name}</ActiveText>
-                            {
-                                mode === 'deleting' && <Box>
-                                    <Text color="grey"> Delete this? </Text>
-                                    <Text color="green"> Y[es] </Text>
-                                    <Text color="red"> N[o] </Text>
-                                </Box>
-                            }
+                    return <Box key={fileMeta.filename}>
+                        <Box flexGrow={1} width={100}>
+                            <Text>{name}</Text>
                         </Box>
-                    )
-                }
-                return <Box key={fileMeta.filename}>
-                    <Box flexGrow={1} width={100}>
-                        <Text>{name}</Text>
                     </Box>
-                </Box>
-            })}
+                })}
+            </ScrollBox>
             <Helper mode={mode} />
-
         </Box>
     </>)
 }

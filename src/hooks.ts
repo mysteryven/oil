@@ -4,6 +4,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { useInput } from 'ink'
 import { Mode } from './app.js'
+import { OFFSET } from './constant.js'
 
 const isValidPath = (pathLike: string): boolean => {
     return fs.existsSync(pathLike)
@@ -106,15 +107,16 @@ export const useActiveIndex = (initialIndex: number, length: number, mode: Mode,
         if (key.upArrow || input === 'k') {
             setIndex((prev) => {
                 if (prev === 0) {
-                    return length - 1
+                    return prev
                 }
                 return prev - 1
             })
         }
         if (key.downArrow || input === 'j') {
             setIndex((prev) => {
+                // TODO: support infinite scroll
                 if (prev === length - 1) {
-                    return 0
+                    return prev
                 }
                 return prev + 1
             })
@@ -134,4 +136,31 @@ export const usePrevious = <T>(value: T): T | undefined => {
         ref.current = value
     }, [value])
     return ref.current
+}
+
+export const useOffset = (currentIndex: number, length: number) => {
+    const [offset, setOffset] = useState(0)
+    useInput((input, key) => {
+        if (key.upArrow || input === 'k') {
+            if (offset <= 0) {
+                return
+            }
+            if (offset === -1 && length > OFFSET) {
+                setOffset(length - 1)
+            }
+
+            setOffset((offset) => offset - 1)
+        }
+
+        if (key.downArrow || input === 'j') {
+            if (currentIndex === length - 1) {
+                return
+            }
+            if (currentIndex >= OFFSET - 1) {
+                setOffset((offset) => offset + 1)
+            }
+        }
+    })
+
+    return offset
 }

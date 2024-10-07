@@ -1,8 +1,9 @@
 import { Text, Box, useInput } from 'ink'
 import React, { useEffect, useState } from 'react';
 import TextInput from 'ink-text-input';
+import fs from 'node:fs'
 import path from 'node:path'
-import { ensureDirSync, ensureFileSync, moveSync } from 'fs-extra'
+import { ensureDirSync, ensureFileSync } from 'fs-extra'
 import { EMPTY } from './constant.ts';
 import type { Mode } from './app.tsx';
 import type { FileMeta } from './hooks.ts';
@@ -44,7 +45,7 @@ const ActiveText = (props: TextProps) => {
         props.reload()
         const oldPath = props.fileMeta.path
         const newPath = path.dirname(oldPath) + '/' + newFilename
-        moveSync(oldPath, newPath)
+        fs.renameSync(oldPath, newPath)
     }
 
     const handleAddFile = () => {

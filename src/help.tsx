@@ -10,7 +10,8 @@ export const Helper = (props: { mode: Mode }) => {
             <Text> | </Text>
             <Text>a: Add</Text>
             <Text> | </Text>
-            <Text> &lt;Enter&gt;: Modify </Text>
+            <Text>d: Delete</Text>
+            <Text> &lt;Enter&gt;: rename </Text>
             <Text> | </Text>
             <Text>-: Go to parent dir </Text>
             <Text> | </Text>
