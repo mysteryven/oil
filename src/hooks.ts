@@ -91,7 +91,7 @@ export const useFileList = (dir: string, deps: any[]) => {
         setList(arr)
     }, [dir, ...deps])
 
-    return list
+    return [list, setList] as const
 }
 
 // listen the keyboard keydown and keyup, return the active index,
@@ -125,7 +125,7 @@ export const useActiveIndex = (initialIndex: number, length: number, mode: Mode,
         setIndex(initialIndex)
     }, deps)
 
-    return currentIndex
+    return [currentIndex, setIndex] as const
 }
 
 export const usePrevious = <T>(value: T): T | undefined => {

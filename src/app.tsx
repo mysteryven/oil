@@ -3,6 +3,7 @@ import { Box, Newline, Spacer, Text, useApp, useInput } from 'ink'
 import { useActiveIndex, useCurrentDir, useFileList, usePrevious } from './hooks.js';
 import ActiveText from './activeText.tsx';
 import path from 'node:path';
+import { EMPTY } from './constant.ts';
 
 interface Props {
     initialDir: string
@@ -15,7 +16,7 @@ const App = (props: Props) => {
     const [reloadFlag, setReloadFlag] = useState(0)
     const [currentDir, actions] = useCurrentDir(props.initialDir)
     const [lastDir, setLastDir] = useState<string>("")
-    const list = useFileList(currentDir, [reloadFlag])
+    const [list, setList] = useFileList(currentDir, [reloadFlag])
     let initialIndex = Math.min(list.length, 1)
 
     // we are doing a parent action
@@ -23,7 +24,7 @@ const App = (props: Props) => {
         initialIndex = list.findIndex((fileMeta) => fileMeta.filename === lastDir)
     }
     const [mode, setMode] = useState<Mode>('Normal')
-    const activeIndex = useActiveIndex(initialIndex, list.length, mode, [currentDir, initialIndex])
+    const [activeIndex, setActiveIndex] = useActiveIndex(initialIndex, list.length, mode, [currentDir, initialIndex])
     const [debug, setDebug] = useState<any>()
 
     useEffect(() => {
@@ -34,6 +35,10 @@ const App = (props: Props) => {
     useInput((_input, key) => {
         if (key.escape) {
             setMode('Normal')
+            setList(list => {
+                return list.filter(file => file.filename !== EMPTY)
+            })
+            setActiveIndex(index => Math.min(list.length, index - 1))
         }
         if (key.return) {
             if (list[activeIndex]?.filename === "..") {
@@ -50,7 +55,7 @@ const App = (props: Props) => {
         }
 
         if (input === 'a' && mode === 'Normal') {
-
+            handleAdd()
         }
 
         if (key.return) {
@@ -78,12 +83,25 @@ const App = (props: Props) => {
         setMode('Normal')
     }
 
+    const handleAdd = () => {
+        list.splice(activeIndex + 1, 0, { filename: EMPTY, type: 'file', path: EMPTY })
+        setList([...list])
+        setActiveIndex((prev) => prev + 1)
+        setMode('Insert')
+    }
+
     return (<>
         <Box flexDirection="column" borderStyle={"round"} flexGrow={1} height={30}>
             {list.map((fileMeta, index) => {
                 const name = fileMeta.type === 'dir' ? fileMeta.filename + '/' : fileMeta.filename
                 if (activeIndex === index) {
-                    return (<ActiveText key={fileMeta.filename} mode={mode} fileMeta={fileMeta} reload={reload}>{name}</ActiveText>)
+                    return (<ActiveText
+                        key={fileMeta.filename}
+                        mode={mode}
+                        fileMeta={fileMeta}
+                        reload={reload}
+                        currentDir={currentDir}
+                    >{name}</ActiveText>)
                 }
                 return <Box key={fileMeta.filename}>
                     <Box flexGrow={1} width={100}>
