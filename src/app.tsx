@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Spacer, Static, Text, useApp, useInput } from 'ink'
+import { Box, Text, useApp, useInput } from 'ink'
 import path from 'node:path';
 import { useActiveIndex, useCurrentDir, useFileList, useOffset } from './hooks.js';
 import ActiveText from './activeText.tsx';
 import { EMPTY, OFFSET, PARENT_DIR } from './constant.ts';
 import { Helper } from './help.tsx';
 import { rmSync } from 'node:fs';
-import { ScrollBox, type Props as ScrollBoxProps } from '@sasaplus1/ink-scroll-box'
+import { ScrollBox } from '@sasaplus1/ink-scroll-box'
 
 interface Props {
     initialDir: string
@@ -92,7 +92,7 @@ const App = (props: Props) => {
             actions.parent()
         }
         if (input === '=' && list[activeIndex]?.filename) {
-            actions.in(list[activeIndex].filename)
+            actions.in(list[activeIndex].absolutePath)
             setChildDir("")
         }
     })
@@ -104,7 +104,7 @@ const App = (props: Props) => {
     }
 
     const startAdd = () => {
-        list.splice(activeIndex + 1, 0, { filename: EMPTY, type: 'file', path: EMPTY })
+        list.splice(activeIndex + 1, 0, { filename: EMPTY, type: 'file', absolutePath: EMPTY })
         setList([...list])
         setActiveIndex((prev) => prev + 1)
         setMode('Insert')
@@ -119,7 +119,7 @@ const App = (props: Props) => {
 
     const doneDelete = () => {
         let fileMeta = list[activeIndex]
-        rmSync(fileMeta.path, { recursive: true, force: true })
+        rmSync(fileMeta.absolutePath, { recursive: true, force: true })
         list.splice(activeIndex, 1)
         setList([...list])
         setActiveIndex((prev) => prev - 1)

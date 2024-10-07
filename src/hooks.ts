@@ -39,8 +39,8 @@ export const useCurrentDir = (initialDir: string) => {
                     return false
                 }
 
-                setCurrentDir((prev) => {
-                    return path.join(prev, dirOrFile)
+                setCurrentDir(() => {
+                    return dirOrFile
                 })
 
                 return true
@@ -53,7 +53,7 @@ export interface FileMeta {
     // dirname or filename
     filename: string,
     // full file path
-    path: string,
+    absolutePath: string,
     // "..", non-file, non-dir should be 'other'
     type: 'file' | 'dir' | 'other'
 }
@@ -70,7 +70,7 @@ export const useFileList = (dir: string, deps: any[]) => {
         }
         let files = fs.readdirSync(dir)
         let arr: FileMeta[] = [
-            { filename: '..', path: '..', type: 'other' }
+            { filename: '..', absolutePath: '..', type: 'other' }
         ]
         arr.push(
             ...files.map((file) => {
@@ -85,7 +85,7 @@ export const useFileList = (dir: string, deps: any[]) => {
                     type = 'other'
                 }
                 return {
-                    filename: file, type, path: fullPath
+                    filename: file, type, absolutePath: fullPath
                 }
             })
         )

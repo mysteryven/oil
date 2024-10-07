@@ -43,7 +43,7 @@ const ActiveText = (props: TextProps) => {
     /** functions */
     const handleRenameFile = () => {
         props.reload()
-        const oldPath = props.fileMeta.path
+        const oldPath = props.fileMeta.absolutePath
         const newPath = path.dirname(oldPath) + '/' + newFilename
         fs.renameSync(oldPath, newPath)
     }
