@@ -1,8 +1,8 @@
 import { Text, Box, useInput } from 'ink'
 import React, { useEffect, useState } from 'react';
 import TextInput from 'ink-text-input';
-import fs from 'node:fs'
 import path from 'node:path'
+import { ensureDirSync, ensureFileSync, moveSync } from 'fs-extra'
 import { EMPTY } from './constant.ts';
 import type { Mode } from './app.tsx';
 import type { FileMeta } from './hooks.ts';
@@ -37,8 +37,6 @@ const ActiveText = (props: TextProps) => {
                 handleAddFile()
             }
         }
-
-
     })
 
     /** functions */
@@ -46,13 +44,18 @@ const ActiveText = (props: TextProps) => {
         props.reload()
         const oldPath = props.fileMeta.path
         const newPath = path.dirname(oldPath) + '/' + newFilename
-        fs.renameSync(oldPath, newPath)
+        moveSync(oldPath, newPath)
     }
 
     const handleAddFile = () => {
         props.reload()
         const newPath = path.join(props.currentDir, newFilename)
-        fs.writeFileSync(newPath, '', 'utf8')
+
+        if (newPath.endsWith('/')) {
+            ensureDirSync(newPath)
+        } else {
+            ensureFileSync(newPath)
+        }
     }
 
     return <Box borderRightColor={"white"} height={1} overflowX="hidden">
