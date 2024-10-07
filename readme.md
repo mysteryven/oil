@@ -1,6 +1,9 @@
-# oil
+<h1 align="center">oil</h1>
 
-Manage and navigate file system easily from your terminal.
+<p align="center">Manage and navigate file system easily from your terminal!</p>
+
+![CleanShot 2024-10-07 at 22 28 20@2x](https://github.com/user-attachments/assets/4f77fca7-27b3-4a2a-8498-cc34be526ac8)
+
 
 ## Motivation
 
@@ -13,33 +16,38 @@ to use the [oil]'s way to manage my file system anytime.
 npm install --global oil
 ```
 
+If you don't have npm yet, you can install the [node](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+
 ## Usage
 
-1. navigate
+#### navigate
 
-- <Keyup> / `j`: Move up.
-- <Keydown> / `k`: Move down.
+- `<Keyup>` / `j`: Move up.
+- `<Keydown>` / `k`: Move down.
 
-2. Add file or directory
+#### Add file or directory
 
 Press `a`, if the string ends with `/`, it will add a directory, otherwise it will add a file.
 
 Then press `<Enter>` to make sure your operate.
 
-3. Delete file or directory
+#### Delete file or directory
 
 Press `d`, then press `y` to make sure your operate.
 
-4. Move to parent directory
+#### Move to parent directory
 
 Press `-`.
 
-5. Move to child directory
+#### Move to child directory
 
 Press `=`
 
 ## Credits
 
 Really inspired by [oil]!
+
+
+Any feedback is welcome!
 
 [oil]: https://github.com/stevearc/oil.nvim
