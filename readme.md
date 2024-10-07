@@ -15,26 +15,26 @@ npm install --global oil
 
 ## Usage
 
-### navigate
+1. navigate
 
 - <Keyup> / `j`: Move up.
 - <Keydown> / `k`: Move down.
 
-### Add file or directory
+2. Add file or directory
 
 Press `a`, if the string ends with `/`, it will add a directory, otherwise it will add a file.
 
 Then press `<Enter>` to make sure your operate.
 
-### Delete file or directory
+3. Delete file or directory
 
 Press `d`, then press `y` to make sure your operate.
 
-### Move to parent directory
+4. Move to parent directory
 
 Press `-`.
 
-### Move to child directory
+5. Move to child directory
 
 Press `=`
 
