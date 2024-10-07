@@ -8,7 +8,8 @@
     "type": "module",
     "scripts": {
         "dev": "tsx src/cli.tsx",
-        "build": "unbuild"
+        "build": "unbuild",
+        "lint": "oxlint -D correctness"
     },
     "files": [
         "dist",
