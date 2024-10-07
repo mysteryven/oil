@@ -4,7 +4,6 @@
 
 ![CleanShot 2024-10-07 at 22 28 20@2x](https://github.com/user-attachments/assets/4f77fca7-27b3-4a2a-8498-cc34be526ac8)
 
-
 ## Motivation
 
 I usually miss `-p` when `mkdir foo/bar/baz` or use `touch` to create a file that directory doesn't exist. I want
@@ -13,7 +12,7 @@ to use the [oil]'s way to manage my file system anytime.
 ## Install
 
 ```bash
-npm install --global oil
+npm install --global oil-terminal
 ```
 
 If you don't have npm yet, you can install the [node](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
@@ -46,7 +45,6 @@ Press `=`
 ## Credits
 
 Really inspired by [oil]!
-
 
 Any feedback is welcome!
 
