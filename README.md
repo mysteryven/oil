@@ -24,15 +24,19 @@ If you don't have npm yet, you can install the [node](https://docs.npmjs.com/dow
 - `<Keyup>` / `j`: Move up.
 - `<Keydown>` / `k`: Move down.
 
+#### exist
+
+Press `q`.
+
 #### Add file or directory
 
 Press `a`, if the string ends with `/`, it will add a directory, otherwise it will add a file.
 
-Then press `<Enter>` to make sure your operate.
+Then press `<Enter>` to make sure your operation.
 
 #### Delete file or directory
 
-Press `d`, then press `y` to make sure your operate.
+Press `d`, then press `y` to make sure your operation.
 
 #### Move to parent directory
 
