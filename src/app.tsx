@@ -24,18 +24,13 @@ const App = (props: Props) => {
     const [list, setList] = useFileList(currentDir, [reloadFlag])
     const [mode, setMode] = useState<Mode>('Normal')
 
-    let initialIndex = Math.min(list.length, 1)
+    let initialIndex = list.length === 1 ? 0 : 1
     // we are back to a parent dir
     if (lastDir) {
         initialIndex = list.findIndex((fileMeta) => fileMeta.filename === lastDir)
     }
     const [activeIndex, setActiveIndex] = useActiveIndex(initialIndex, list.length, mode, [currentDir, initialIndex])
-    const [_debug, setDebug] = useState<any>()
     const offset = useOffset(activeIndex, list.length)
-
-    useEffect(() => {
-        setDebug(`reloadFlag${reloadFlag}, currentDir: ${currentDir}, activeIndex: ${activeIndex}, mode: ${mode}`)
-    }, [reloadFlag, currentDir, activeIndex, mode])
 
     // switch mode
     useInput((_input, key) => {
