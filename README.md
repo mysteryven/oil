@@ -19,14 +19,20 @@ If you don't have npm yet, you can install the [node](https://docs.npmjs.com/dow
 
 ## Usage
 
-#### navigate
+### Start
 
-- `<Keyup>` / `j`: Move up.
-- `<Keydown>` / `k`: Move down.
+```bash
+oil
+```
 
 #### exist
 
 Press `q`.
+
+#### navigate
+
+- `<Keyup>` / `j`: Move up.
+- `<Keydown>` / `k`: Move down.
 
 #### Add file or directory
 
