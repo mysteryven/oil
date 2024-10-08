@@ -18,7 +18,7 @@ export const Helper = (props: { mode: Mode }) => {
             <Text> | </Text>
             <Text>=: Into dir </Text>
         </Box>
-        <Box>
+        {/* <Box>
             <Text color={"gray"}>
                 <Newline />
                 {
@@ -27,6 +27,6 @@ export const Helper = (props: { mode: Mode }) => {
                         : "Tip: You are in insert mode, press <ESC> to undo the modify, press <Enter> to save the modify"
                 }
             </Text>
-        </Box>
+        </Box> */}
     </Box>
 }
