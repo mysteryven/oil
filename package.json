@@ -1,6 +1,6 @@
 {
     "name": "oil-terminal",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "license": "MIT",
     "author": "mysteryven",
     "description": "Manage and navigate file system easily from your terminal.",
