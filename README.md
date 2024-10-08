@@ -19,7 +19,7 @@ If you don't have npm yet, you can install the [node](https://docs.npmjs.com/dow
 
 ## Usage
 
-### Start
+#### Start
 
 ```bash
 oil
@@ -31,8 +31,8 @@ Press `q`.
 
 #### navigate
 
-- `<Keyup>` / `j`: Move up.
-- `<Keydown>` / `k`: Move down.
+- `<Keyup>` / `k`: Move up.
+- `<Keydown>` / `j`: Move down.
 
 #### Add file or directory
 
