@@ -25,11 +25,11 @@ If you don't have npm yet, you can install the [node](https://docs.npmjs.com/dow
 oil
 ```
 
-#### exist
+#### Exit
 
 Press `q`.
 
-#### navigate
+#### Navigate
 
 - `<Keyup>` / `k`: Move up.
 - `<Keydown>` / `j`: Move down.
