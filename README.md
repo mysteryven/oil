@@ -38,11 +38,11 @@ Press `q`.
 
 Press `a`, if the string ends with `/`, it will add a directory, otherwise it will add a file.
 
-Then press `<Enter>` to make sure your operation.
+Then press `<Enter>` to confirm.
 
 #### Delete file or directory
 
-Press `d`, then press `y` to make sure your operation.
+Press `d`, then press `y` to confirm
 
 #### Move to parent directory
 
