@@ -36,6 +36,7 @@ const App = (props: Props) => {
     useInput((input, key) => {
         if (key.escape) {
             setMode('Normal')
+            // only cancel adding we need minus index & refresh list since it add a empty item
             const cancelAdding = list.some(file => file.filename === EMPTY);
             cancelAdding && setList(list => {
                 return list.filter(file => file.filename !== EMPTY)
