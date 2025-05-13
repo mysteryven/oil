@@ -33,15 +33,16 @@ const App = (props: Props) => {
     const offset = useOffset(activeIndex, list.length)
 
     // switch mode
-    useInput((_input, key) => {
+    useInput((input, key) => {
         if (key.escape) {
             setMode('Normal')
-            setList(list => {
+            const cancelAdding = list.some(file => file.filename === EMPTY);
+            cancelAdding && setList(list => {
                 return list.filter(file => file.filename !== EMPTY)
             })
-            setActiveIndex(index => Math.min(list.length, index - 1))
+            setActiveIndex(index => Math.min(list.length, cancelAdding ? index - 1 : index))
         }
-        if (key.return) {
+        if (input === 'r') {
             if (list[activeIndex]?.filename === PARENT_DIR) {
                 return
             }
@@ -79,7 +80,7 @@ const App = (props: Props) => {
             setChildDir(parentDir)
             actions.parent()
         }
-        if (input === '=' && list[activeIndex]?.filename) {
+        if (mode == 'Normal' && ((input === '=' || key.return) && list[activeIndex]?.filename)) {
             actions.in(list[activeIndex].absolutePath)
             setChildDir("")
         }

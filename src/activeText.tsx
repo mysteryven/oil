@@ -42,14 +42,17 @@ const ActiveText = (props: TextProps) => {
 
     /** functions */
     const handleRenameFile = () => {
-        props.reload()
         const oldPath = props.fileMeta.absolutePath
         const newPath = path.dirname(oldPath) + '/' + newFilename
-        fs.renameSync(oldPath, newPath)
+        try {
+            fs.renameSync(oldPath, newPath)
+            props.reload()
+        } catch {
+            // do nothing for now
+        }
     }
 
     const handleAddFile = () => {
-        props.reload()
         const newPath = path.join(props.currentDir, newFilename)
 
         if (newPath.endsWith('/')) {
@@ -57,6 +60,7 @@ const ActiveText = (props: TextProps) => {
         } else {
             ensureFileSync(newPath)
         }
+        props.reload()
     }
 
     return <Box borderRightColor={"white"} height={1} overflowX="hidden">

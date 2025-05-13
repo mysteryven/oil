@@ -11,7 +11,11 @@ const isValidPath = (pathLike: string): boolean => {
 }
 
 const isFile = (pathStr: string): boolean => {
-    return fs.lstatSync(pathStr).isFile()
+    try {
+        return fs.lstatSync(pathStr).isFile();
+    } catch {
+        return false;
+    }
 }
 
 export const useCurrentDir = (initialDir: string) => {
@@ -75,17 +79,9 @@ export const useFileList = (dir: string, deps: any[]) => {
         arr.push(
             ...files.map((file) => {
                 let fullPath = path.join(dir, file)
-                let type: 'file' | 'dir' | 'other' = 'other'
-                let status = fs.statSync(fullPath)
-                if (status.isDirectory()) {
-                    type = 'dir'
-                } else if (status.isFile()) {
-                    type = 'file'
-                } else {
-                    type = 'other'
-                }
+
                 return {
-                    filename: file, type, absolutePath: fullPath
+                    filename: file, type: getFileType(fullPath), absolutePath: fullPath
                 }
             })
         )
@@ -119,6 +115,22 @@ export const useFileList = (dir: string, deps: any[]) => {
     }, [dir, ...deps])
 
     return [list, setList] as const
+}
+
+function getFileType(fullPath: string) {
+    let type: 'file' | 'dir' | 'other' = 'other'
+    try {
+        let status = fs.statSync(fullPath)
+        if (status.isDirectory()) {
+            type = 'dir'
+        } else if (status.isFile()) {
+            type = 'file'
+        }
+    } catch {
+        type = "other"
+    }
+
+    return type;
 }
 
 // listen the keyboard keydown and keyup, return the active index,
